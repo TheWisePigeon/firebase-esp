@@ -89,14 +89,12 @@ func (sender *Sender) WritePlainEmail(dest []string, subject, bodyMessage string
 }
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-  subject := r.URL.Query().Get("subject")
-  message := r.URL.Query().Get("message")
   senderEmail := os.Getenv("SENDER_EMAIL")
   appPassword := os.Getenv("APP_PASSWORD")
 	sender := NewSender(senderEmail, appPassword)
 	receiver := []string{"hamanecisse2@gmail.com"}
-	body := sender.WritePlainEmail(receiver, subject, message)
-	sender.SendMail(receiver, subject, body)
+	body := sender.WritePlainEmail(receiver, "Alerte", "Seul atteint")
+	sender.SendMail(receiver, "Alerte", body)
 	w.WriteHeader(http.StatusOK)
 	return
 }
